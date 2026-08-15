@@ -5,199 +5,219 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>درخشش | انگشتر دست‌ساز</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&family=Lalezar&family=Noto+Serif:ital,wght@0,500;0,700;1,500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --obsidian:#faf7f1;
-    --obsidian-2:#f3ead9;
-    --gold:#b8874a;
-    --gold-bright:#8a6420;
-    --ivory:#2b2620;
-    --emerald:#e6ecdd;
-    --bronze:#6b4f30;
-    --line: rgba(184,135,74,0.32);
+    --noir:#0e0c09;
+    --noir-2:#171310;
+    --noir-3:#211b14;
+    --gold:#d6a94a;
+    --gold-bright:#f3ce7d;
+    --copper:#b3672f;
+    --ivory:#f4ecdc;
+    --ivory-dim:rgba(244,236,220,0.62);
+    --ivory-faint:rgba(244,236,220,0.4);
+    --line:rgba(214,169,74,0.22);
+    --danger:#e0745a;
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
   body{
-    background:var(--obsidian);
+    background:var(--noir);
     color:var(--ivory);
     font-family:'Vazirmatn',sans-serif;
     overflow-x:hidden;
   }
-  h1,h2,h3,.display{
-    font-family:'Vazirmatn',sans-serif;
-    font-weight:800;
-  }
-  .serif{
-    font-family:'Noto Serif','Vazirmatn',serif;
-    font-style:italic;
-    font-weight:500;
-  }
-  a{color:inherit;text-decoration:none;}
-  ::selection{background:var(--gold);color:var(--obsidian-2);}
+  h1,h2,h3{font-family:'Vazirmatn',sans-serif; font-weight:800;}
+  .display{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; letter-spacing:.5px;}
+  .serif{font-family:'Noto Serif','Vazirmatn',serif; font-style:italic; font-weight:500;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--gold); color:var(--noir);}
 
   @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
   }
 
+  /* ---------- background texture ---------- */
+  .grain{position:fixed; inset:0; z-index:1; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
+    background-image:radial-gradient(circle at 20% 30%, #fff 0, transparent 0.7px), radial-gradient(circle at 60% 70%, #fff 0, transparent 0.7px);
+    background-size:3px 3px;}
+
   /* ---------- top gold thread ---------- */
-  .thread-wrap{position:fixed; top:0; right:0; left:0; height:3px; z-index:60; background:rgba(43,38,32,0.08);}
-  .thread-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--bronze),var(--gold),var(--gold-bright)); transition:width .1s linear;}
+  .thread-wrap{position:fixed; top:0; right:0; left:0; height:3px; z-index:70; background:rgba(214,169,74,0.08);}
+  .thread-fill{height:100%; width:0%; background:linear-gradient(90deg,var(--copper),var(--gold),var(--gold-bright)); transition:width .1s linear;}
 
   /* ---------- nav ---------- */
   header{
-    position:fixed; top:3px; right:0; left:0; z-index:50;
+    position:fixed; top:3px; right:0; left:0; z-index:60;
     display:flex; align-items:center; justify-content:space-between;
-    padding:22px 5%;
-    backdrop-filter:blur(10px);
-    background:rgba(250,247,241,0.82);
+    padding:20px 5%;
+    backdrop-filter:blur(14px);
+    background:rgba(14,12,9,0.72);
     border-bottom:1px solid var(--line);
   }
-  .logo{font-size:1.4rem; letter-spacing:1px; display:flex; align-items:center; gap:10px;}
-  .logo svg{width:26px;height:26px;}
+  .logo{font-size:1.5rem; letter-spacing:1px; display:flex; align-items:center; gap:10px; font-family:'Lalezar',sans-serif;}
+  .logo svg{width:28px;height:28px;}
   nav ul{list-style:none; display:flex; gap:36px; font-size:.95rem;}
-  nav a{position:relative; padding-bottom:4px; color:var(--ivory); opacity:.85; transition:opacity .25s;}
-  nav a:hover{opacity:1;}
+  nav a{position:relative; padding-bottom:4px; color:var(--ivory-dim); transition:color .25s;}
+  nav a:hover{color:var(--ivory);}
   nav a::after{content:'';position:absolute;right:0;bottom:0;width:0;height:1px;background:var(--gold);transition:width .3s;}
   nav a:hover::after{width:100%;}
   .nav-cta{
     border:1px solid var(--gold); color:var(--gold-bright); padding:9px 20px; border-radius:2px;
     font-size:.85rem; transition:.3s;
   }
-  .nav-cta:hover{background:var(--gold); color:var(--obsidian-2);}
-  .menu-btn{display:none; background:none;border:none;color:var(--ivory);font-size:1.6rem;cursor:pointer;}
+  .nav-cta:hover{background:var(--gold); color:var(--noir);}
+  .menu-btn{display:none; background:none; border:none; color:var(--ivory); font-size:1.5rem; cursor:pointer; z-index:90; position:relative;}
+
+  .mobile-drawer{
+    position:fixed; inset:0; z-index:80; background:rgba(9,7,5,0.97);
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:34px;
+    opacity:0; pointer-events:none; transition:opacity .35s ease;
+  }
+  .mobile-drawer.open{opacity:1; pointer-events:auto;}
+  .mobile-drawer a{font-size:1.5rem; font-family:'Lalezar',sans-serif; color:var(--ivory);}
+  .mobile-drawer .nav-cta{margin-top:10px;}
 
   /* ---------- hero ---------- */
   .hero{
     min-height:100svh;
     display:flex; align-items:center; justify-content:center;
     position:relative;
-    padding:140px 5% 80px;
+    padding:150px 5% 90px;
     text-align:center;
-    background:
-      radial-gradient(ellipse 60% 50% at 50% 20%, rgba(184,135,74,0.14), transparent),
-      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(184,135,74,0.10), transparent);
+    background:radial-gradient(ellipse 70% 55% at 50% 15%, rgba(214,169,74,0.16), transparent 60%);
+    overflow:hidden;
   }
-  .hero-ring{
-    position:absolute; inset:0; margin:auto; width:min(70vw,620px); height:min(70vw,620px);
-    pointer-events:none; opacity:.55;
+  .spark{position:absolute; width:3px; height:3px; border-radius:50%; background:var(--gold-bright);
+    box-shadow:0 0 8px 2px rgba(243,206,125,.7); opacity:0; animation:spark-float 7s ease-in-out infinite;}
+  @keyframes spark-float{
+    0%{opacity:0; transform:translateY(0);}
+    15%{opacity:.9;}
+    85%{opacity:.5;}
+    100%{opacity:0; transform:translateY(-160px);}
   }
-  .hero-content{position:relative; z-index:2; max-width:760px;}
+  .hero-orbit{
+    position:absolute; top:calc(50% - 40px); left:50%; transform:translate(-50%,-50%);
+    width:min(76vw,640px); height:min(76vw,640px);
+    pointer-events:none;
+  }
+  .hero-orbit svg{width:100%; height:100%; opacity:.5;}
+  .orbit-spin{position:absolute; inset:0; animation:spin 16s linear infinite;}
+  .orbit-spin .dot{position:absolute; top:2%; left:50%; width:8px; height:8px; margin-right:-4px; border-radius:50%;
+    background:var(--gold-bright); box-shadow:0 0 16px 5px rgba(243,206,125,.85);}
+  @keyframes spin{to{transform:rotate(360deg);}}
+
+  .hero-content{position:relative; z-index:2; max-width:780px;}
   .eyebrow{
     display:inline-flex; align-items:center; gap:10px;
-    font-size:.78rem; letter-spacing:3px; color:var(--gold-bright); opacity:.9;
-    margin-bottom:28px; text-transform:uppercase;
+    font-size:.78rem; letter-spacing:3px; color:var(--gold-bright); opacity:.95;
+    margin-bottom:30px; text-transform:uppercase;
   }
   .eyebrow::before,.eyebrow::after{content:'';width:28px;height:1px;background:var(--gold);}
   .hero h1{
-    font-size:clamp(2.4rem,6vw,4.6rem);
-    line-height:1.25;
-    margin-bottom:26px;
+    font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400;
+    font-size:clamp(2.6rem,7vw,5.2rem);
+    line-height:1.3;
+    margin-bottom:28px;
   }
   .hero h1 em{
-    font-family:'Noto Serif',serif; font-style:italic; font-weight:500;
-    background:linear-gradient(95deg,var(--gold-bright),var(--gold) 60%,var(--bronze));
+    font-style:normal;
+    background:linear-gradient(95deg,var(--copper),var(--gold-bright) 55%,var(--gold));
     -webkit-background-clip:text; background-clip:text; color:transparent;
+    background-size:220% auto;
+    animation:shimmer 5s ease-in-out infinite;
   }
+  @keyframes shimmer{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
   .hero p{
-    font-size:1.08rem; color:rgba(43,38,32,0.72); max-width:520px; margin:0 auto 40px;
+    font-size:1.08rem; color:var(--ivory-dim); max-width:520px; margin:0 auto 42px;
     line-height:2;
   }
   .hero-ctas{display:flex; gap:18px; justify-content:center; flex-wrap:wrap;}
   .btn-primary{
     background:linear-gradient(95deg,var(--gold),var(--gold-bright));
-    color:var(--obsidian-2); padding:15px 34px; border-radius:2px; font-weight:700; font-size:.95rem;
-    transition:transform .25s, box-shadow .25s; box-shadow:0 8px 30px -10px rgba(201,160,61,0.5);
+    color:var(--noir); padding:15px 34px; border-radius:2px; font-weight:700; font-size:.95rem;
+    transition:transform .25s, box-shadow .25s; box-shadow:0 8px 30px -10px rgba(214,169,74,0.55);
+    display:inline-block;
   }
-  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 34px -10px rgba(201,160,61,0.65);}
+  .btn-primary:hover{transform:translateY(-3px); box-shadow:0 14px 34px -10px rgba(214,169,74,0.7);}
   .btn-ghost{
-    border:1px solid rgba(43,38,32,0.3); padding:15px 30px; border-radius:2px; font-size:.95rem;
-    transition:.3s;
+    border:1px solid rgba(244,236,220,0.22); padding:15px 30px; border-radius:2px; font-size:.95rem;
+    transition:.3s; display:inline-block;
   }
   .btn-ghost:hover{border-color:var(--gold); color:var(--gold-bright);}
 
   .scroll-cue{
     position:absolute; bottom:34px; left:50%; transform:translateX(-50%);
     display:flex; flex-direction:column; align-items:center; gap:8px;
-    font-size:.7rem; letter-spacing:2px; color:rgba(43,38,32,.5);
+    font-size:.7rem; letter-spacing:2px; color:var(--ivory-faint);
   }
   .scroll-cue .line{width:1px; height:36px; background:linear-gradient(var(--gold), transparent); animation:pulse 2s ease-in-out infinite;}
-  @keyframes pulse{0%,100%{opacity:.3;}50%{opacity:1;}}
+  @keyframes pulse{0%,100%{opacity:.25;}50%{opacity:1;}}
 
   /* ---------- section shells ---------- */
   section{padding:120px 5%; position:relative;}
   .section-head{max-width:640px; margin:0 auto 64px; text-align:center;}
   .section-head .eyebrow{margin-bottom:18px;}
-  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem); line-height:1.35;}
-  .section-head p{color:rgba(43,38,32,0.65); margin-top:16px; font-size:1rem; line-height:1.9;}
+  .section-head h2{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; font-size:clamp(2rem,4.5vw,3rem); line-height:1.35;}
+  .section-head p{color:var(--ivory-dim); margin-top:16px; font-size:1rem; line-height:1.9;}
 
   /* ---------- collections ---------- */
-  .collections{background:var(--obsidian-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
-  .collection-grid{
-    max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:28px;
-  }
+  .collections{background:var(--noir-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .collection-grid{max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1fr; gap:28px; max-width:480px;}
   .collection-card{
-    position:relative; border:1px solid var(--line); border-radius:4px; padding:56px 36px;
+    position:relative; border:1px solid var(--line); border-radius:6px; padding:56px 36px;
     overflow:hidden; min-height:340px; display:flex; flex-direction:column; justify-content:flex-end;
-    transition:border-color .35s, transform .35s;
+    transition:border-color .35s, transform .35s, box-shadow .35s;
+    background:radial-gradient(circle at 80% 20%, rgba(214,169,74,0.09), transparent 60%);
   }
-  .collection-card:hover{border-color:var(--gold); transform:translateY(-6px);}
-  .collection-card .glyph{
-    position:absolute; top:36px; left:36px; width:120px; height:120px; opacity:.9;
-    transition:transform .6s ease;
-  }
+  .collection-card:hover{border-color:var(--gold); transform:translateY(-6px); box-shadow:0 20px 50px -20px rgba(0,0,0,.6);}
+  .collection-card .glyph{position:absolute; top:36px; left:36px; width:120px; height:120px; opacity:.85; transition:transform .6s ease;}
   .collection-card:hover .glyph{transform:rotate(8deg) scale(1.06);}
-  .collection-card h3{font-size:1.6rem; margin-bottom:10px;}
-  .collection-card p{color:rgba(43,38,32,.6); font-size:.92rem; margin-bottom:18px;}
+  .collection-card h3{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; font-size:1.9rem; margin-bottom:10px;}
+  .collection-card p{color:var(--ivory-dim); font-size:.92rem; margin-bottom:18px;}
   .collection-card .count{color:var(--gold-bright); font-size:.82rem; letter-spacing:1px;}
 
   /* ---------- products ---------- */
-  .product-grid{
-    max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:32px;
-  }
+  .product-grid{max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:32px;}
   .product-card{
-    background:var(--obsidian-2); border:1px solid var(--line); border-radius:4px; overflow:hidden;
-    transition:border-color .3s, transform .3s;
+    background:var(--noir-2); border:1px solid var(--line); border-radius:6px; overflow:hidden;
+    transition:border-color .3s, transform .3s, box-shadow .3s;
+    opacity:0; transform:translateY(20px);
   }
-  .product-card:hover{border-color:var(--gold); transform:translateY(-5px);}
+  .product-card.in{opacity:1; transform:none; transition:opacity .6s ease, transform .6s ease, border-color .3s, box-shadow .3s;}
+  .product-card:hover{border-color:var(--gold); transform:translateY(-6px); box-shadow:0 24px 50px -22px rgba(0,0,0,.65);}
   .product-visual{
     height:220px; display:flex; align-items:center; justify-content:center;
-    background:radial-gradient(circle at 50% 40%, rgba(201,160,61,0.14), transparent 70%);
+    background:radial-gradient(circle at 50% 40%, rgba(214,169,74,0.16), transparent 70%);
     position:relative; overflow:hidden;
   }
-  .product-visual svg{width:96px;height:96px; filter:drop-shadow(0 8px 18px rgba(0,0,0,.5));}
+  .product-visual svg{width:96px;height:96px; filter:drop-shadow(0 8px 18px rgba(0,0,0,.6));}
   .shine{
     position:absolute; top:0; bottom:0; width:60%; left:-70%;
-    background:linear-gradient(100deg, transparent, rgba(255,255,255,0.18), transparent);
-    transform:skewX(-20deg);
-    transition:left .8s ease;
+    background:linear-gradient(100deg, transparent, rgba(255,255,255,0.16), transparent);
+    transform:skewX(-20deg); transition:left .8s ease;
   }
   .product-card:hover .shine{left:120%;}
   .product-info{padding:22px 24px 26px;}
   .product-tag{font-size:.7rem; letter-spacing:2px; color:var(--gold-bright); text-transform:uppercase; margin-bottom:8px; display:block;}
   .product-info h4{font-size:1.15rem; margin-bottom:8px;}
-  .product-info p{font-size:.85rem; color:rgba(43,38,32,.55); margin-bottom:16px; line-height:1.8;}
-  .product-foot{display:flex; align-items:center; justify-content:space-between;}
+  .product-info p{font-size:.85rem; color:var(--ivory-dim); margin-bottom:16px; line-height:1.8;}
+  .product-foot{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;}
   .price{font-weight:700; color:var(--ivory); font-size:1.02rem;}
-  .price small{color:rgba(43,38,32,.5); font-weight:400; font-size:.75rem;}
+  .price small{color:var(--ivory-faint); font-weight:400; font-size:.75rem;}
   .add-btn{
     border:1px solid var(--gold); color:var(--gold-bright); font-size:.8rem; padding:8px 16px; border-radius:2px;
-    transition:.3s;
+    transition:.3s; background:none; font-family:inherit; cursor:pointer;
   }
-  .add-btn:hover{background:var(--gold); color:var(--obsidian-2);}
+  .add-btn:hover{background:var(--gold); color:var(--noir);}
 
   /* ---------- craft / about ---------- */
-  .craft{
-    background:linear-gradient(180deg, var(--obsidian), var(--emerald) 140%, var(--obsidian));
-    text-align:center;
-  }
-  .craft-stats{
-    max-width:920px; margin:64px auto 0; display:grid; grid-template-columns:repeat(4,1fr); gap:20px;
-  }
+  .craft{background:linear-gradient(180deg, var(--noir), var(--noir-3) 140%, var(--noir)); text-align:center;}
+  .craft-stats{max-width:920px; margin:64px auto 0; display:grid; grid-template-columns:repeat(4,1fr); gap:20px;}
   .stat{border-top:1px solid var(--line); padding-top:18px;}
-  .stat .num{font-size:2.2rem; font-weight:800; color:var(--gold-bright); font-family:'Noto Serif',serif;}
-  .stat .lbl{font-size:.82rem; color:rgba(43,38,32,.6); margin-top:6px;}
+  .stat .num{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; font-size:2.4rem; color:var(--gold-bright);}
+  .stat .lbl{font-size:.82rem; color:var(--ivory-dim); margin-top:6px;}
 
   /* ---------- testimonial ---------- */
   .testimonial{max-width:720px; margin:0 auto; text-align:center;}
@@ -207,121 +227,82 @@
 
   /* ---------- newsletter / cta band ---------- */
   .band{
-    background:var(--obsidian-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    background:var(--noir-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);
     display:flex; align-items:center; justify-content:space-between; gap:30px; flex-wrap:wrap;
     padding:70px 5%;
   }
-  .band h3{font-size:1.7rem; max-width:440px; line-height:1.5;}
+  .band h3{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; font-size:1.9rem; max-width:440px; line-height:1.5;}
   .band form{display:flex; gap:10px; flex-wrap:wrap;}
   .band input{
-    background:transparent; border:1px solid rgba(43,38,32,.3); color:var(--ivory);
+    background:transparent; border:1px solid rgba(244,236,220,0.22); color:var(--ivory);
     padding:14px 18px; border-radius:2px; min-width:240px; font-family:inherit;
   }
   .band input:focus{outline:none; border-color:var(--gold);}
-  .band input::placeholder{color:rgba(43,38,32,.4);}
+  .band input::placeholder{color:var(--ivory-faint);}
 
   /* ---------- footer ---------- */
   footer{padding:70px 5% 34px;}
-  .footer-grid{
-    max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px;
-    padding-bottom:50px; border-bottom:1px solid var(--line);
-  }
+  .footer-grid{max-width:1200px; margin:0 auto; display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:40px; padding-bottom:50px; border-bottom:1px solid var(--line);}
   .footer-grid h5{font-size:.85rem; letter-spacing:1px; color:var(--gold-bright); margin-bottom:18px;}
   .footer-grid ul{list-style:none;}
-  .footer-grid li{margin-bottom:10px; font-size:.9rem; color:rgba(43,38,32,.65);}
+  .footer-grid li{margin-bottom:10px; font-size:.9rem; color:var(--ivory-dim);}
   .footer-grid li a:hover{color:var(--gold-bright);}
-  .footer-brand p{color:rgba(43,38,32,.55); font-size:.9rem; line-height:1.9; max-width:280px; margin-top:14px;}
-  .bottom-bar{
-    max-width:1200px; margin:26px auto 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
-    font-size:.78rem; color:rgba(43,38,32,.4);
-  }
+  .footer-brand p{color:var(--ivory-dim); font-size:.9rem; line-height:1.9; max-width:280px; margin-top:14px;}
+  .bottom-bar{max-width:1200px; margin:26px auto 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; font-size:.78rem; color:var(--ivory-faint);}
 
   a:focus-visible, button:focus-visible, input:focus-visible{outline:2px solid var(--gold-bright); outline-offset:3px;}
 
   /* ---------- discount badge ---------- */
-  .discount-badge{
-    position:absolute; top:12px; left:12px; background:var(--gold-bright); color:var(--obsidian-2);
-    font-size:.72rem; font-weight:700; padding:5px 10px; border-radius:2px; letter-spacing:.5px; z-index:2;
-  }
+  .discount-badge{position:absolute; top:12px; left:12px; background:var(--gold-bright); color:var(--noir); font-size:.72rem; font-weight:700; padding:5px 10px; border-radius:2px; letter-spacing:.5px; z-index:2;}
   .old-price{text-decoration:line-through; opacity:.5; margin-left:6px; font-weight:400;}
 
   /* ---------- admin entry link ---------- */
-  .admin-entry{
-    background:none; border:none; color:rgba(43,38,32,.35); font-size:.75rem; cursor:pointer;
-    font-family:inherit; padding:0; transition:color .25s;
-  }
+  .admin-entry{background:none; border:none; color:var(--ivory-faint); font-size:.75rem; cursor:pointer; font-family:inherit; padding:0; transition:color .25s;}
   .admin-entry:hover{color:var(--gold-bright);}
 
   /* ---------- modal ---------- */
-  .modal-overlay{
-    position:fixed; inset:0; background:rgba(13,13,15,0.85); backdrop-filter:blur(4px);
-    display:none; align-items:center; justify-content:center; z-index:100; padding:20px;
-  }
+  .modal-overlay{position:fixed; inset:0; background:rgba(6,5,4,0.9); backdrop-filter:blur(5px); display:none; align-items:center; justify-content:center; z-index:100; padding:20px;}
   .modal-overlay.open{display:flex;}
-  .modal-box{
-    background:var(--obsidian-2); border:1px solid var(--line); border-radius:6px; padding:36px 30px;
-    max-width:360px; width:100%; text-align:center;
-  }
-  .modal-box h3{font-size:1.2rem; margin-bottom:10px;}
-  .modal-box p{color:rgba(43,38,32,.6); font-size:.85rem; margin-bottom:22px; line-height:1.8;}
-  .modal-box input{
-    width:100%; background:transparent; border:1px solid rgba(43,38,32,.3); color:var(--ivory);
-    padding:12px 14px; border-radius:2px; font-family:inherit; margin-bottom:14px; text-align:center;
-  }
+  .modal-box{background:var(--noir-2); border:1px solid var(--line); border-radius:8px; padding:36px 30px; max-width:360px; width:100%; text-align:center;}
+  .modal-box h3{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; font-size:1.5rem; margin-bottom:10px;}
+  .modal-box p{color:var(--ivory-dim); font-size:.85rem; margin-bottom:22px; line-height:1.8;}
+  .modal-box input{width:100%; background:transparent; border:1px solid rgba(244,236,220,0.22); color:var(--ivory); padding:12px 14px; border-radius:2px; font-family:inherit; margin-bottom:14px; text-align:center;}
   .modal-box input:focus{outline:none; border-color:var(--gold);}
   .modal-actions{display:flex; gap:10px;}
   .modal-actions button{flex:1;}
-  .btn-cancel{
-    border:1px solid rgba(43,38,32,.3); color:var(--ivory); padding:12px; border-radius:2px; background:none;
-    font-family:inherit; cursor:pointer; transition:.3s;
-  }
+  .btn-cancel{border:1px solid rgba(244,236,220,0.22); color:var(--ivory); padding:12px; border-radius:2px; background:none; font-family:inherit; cursor:pointer; transition:.3s;}
   .btn-cancel:hover{border-color:var(--gold-bright); color:var(--gold-bright);}
-  .modal-error{color:#e07a5f; font-size:.8rem; min-height:18px; margin-top:-6px; margin-bottom:10px;}
+  .modal-error{color:var(--danger); font-size:.8rem; min-height:18px; margin-top:-6px; margin-bottom:10px;}
 
   /* ---------- admin panel ---------- */
-  .admin-panel{display:none; background:var(--obsidian-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
+  .admin-panel{display:none; background:var(--noir-2); border-top:1px solid var(--line); border-bottom:1px solid var(--line);}
   .admin-panel.open{display:block;}
   .admin-head{display:flex; align-items:center; justify-content:space-between; max-width:1200px; margin:0 auto 40px; flex-wrap:wrap; gap:14px;}
-  .admin-head h2{font-size:1.5rem;}
-  .admin-head .sub{color:rgba(43,38,32,.55); font-size:.85rem; margin-top:6px;}
-  .btn-logout{
-    border:1px solid rgba(43,38,32,.3); color:var(--ivory); padding:9px 18px; border-radius:2px; background:none;
-    font-family:inherit; cursor:pointer; font-size:.85rem; transition:.3s;
-  }
-  .btn-logout:hover{border-color:#e07a5f; color:#e07a5f;}
+  .admin-head h2{font-family:'Lalezar','Vazirmatn',sans-serif; font-weight:400; font-size:1.9rem;}
+  .admin-head .sub{color:var(--ivory-dim); font-size:.85rem; margin-top:6px;}
+  .sync-badge{display:inline-flex; align-items:center; gap:8px; font-size:.75rem; color:var(--gold-bright); margin-top:10px;}
+  .sync-dot{width:7px; height:7px; border-radius:50%; background:var(--gold-bright); box-shadow:0 0 8px 2px rgba(243,206,125,.7); animation:pulse 2s ease-in-out infinite;}
+  .btn-logout{border:1px solid rgba(244,236,220,0.22); color:var(--ivory); padding:9px 18px; border-radius:2px; background:none; font-family:inherit; cursor:pointer; font-size:.85rem; transition:.3s;}
+  .btn-logout:hover{border-color:var(--danger); color:var(--danger);}
   .admin-grid{max-width:1200px; margin:0 auto; display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:24px;}
-  .admin-card{border:1px solid var(--line); border-radius:4px; padding:22px; background:var(--obsidian);}
+  .admin-card{border:1px solid var(--line); border-radius:6px; padding:22px; background:var(--noir);}
   .admin-card h4{font-size:1rem; margin-bottom:16px; color:var(--gold-bright);}
   .admin-field{margin-bottom:14px;}
-  .admin-field label{display:block; font-size:.78rem; color:rgba(43,38,32,.55); margin-bottom:6px;}
-  .admin-field input, .admin-field textarea{
-    width:100%; background:var(--obsidian-2); border:1px solid rgba(43,38,32,.25); color:var(--ivory);
-    padding:10px 12px; border-radius:2px; font-family:inherit; font-size:.88rem;
-  }
+  .admin-field label{display:block; font-size:.78rem; color:var(--ivory-dim); margin-bottom:6px;}
+  .admin-field input, .admin-field textarea{width:100%; background:var(--noir-2); border:1px solid rgba(244,236,220,0.16); color:var(--ivory); padding:10px 12px; border-radius:2px; font-family:inherit; font-size:.88rem;}
   .admin-field input:focus, .admin-field textarea:focus{outline:none; border-color:var(--gold);}
   .admin-field input[type="file"]{padding:8px 10px; cursor:pointer;}
   .image-preview-wrap{margin-top:10px;}
   .image-preview{width:100%; max-height:140px; object-fit:cover; border-radius:4px; border:1px solid var(--line); display:block;}
   .admin-card-actions{display:flex; gap:8px; margin-top:16px;}
-  .btn-save{
-    flex:1; background:linear-gradient(95deg,var(--gold),var(--gold-bright)); color:var(--obsidian-2);
-    border:none; padding:10px; border-radius:2px; font-weight:700; font-size:.82rem; cursor:pointer; transition:.25s;
-  }
+  .btn-save{flex:1; background:linear-gradient(95deg,var(--gold),var(--gold-bright)); color:var(--noir); border:none; padding:10px; border-radius:2px; font-weight:700; font-size:.82rem; cursor:pointer; transition:.25s;}
   .btn-save:hover{opacity:.9;}
-  .btn-delete{
-    border:1px solid #e07a5f; color:#e07a5f; background:none; padding:10px 14px; border-radius:2px;
-    font-family:inherit; cursor:pointer; font-size:.82rem; transition:.3s;
-  }
-  .btn-delete:hover{background:#e07a5f; color:var(--obsidian-2);}
+  .btn-delete{border:1px solid var(--danger); color:var(--danger); background:none; padding:10px 14px; border-radius:2px; font-family:inherit; cursor:pointer; font-size:.82rem; transition:.3s;}
+  .btn-delete:hover{background:var(--danger); color:var(--noir);}
   .save-note{font-size:.75rem; color:var(--gold-bright); margin-top:8px; height:14px;}
-  .admin-add-card{
-    border:1px dashed var(--line); border-radius:4px; padding:22px; display:flex; align-items:center; justify-content:center;
-  }
-  .btn-add-product{
-    border:1px solid var(--gold); color:var(--gold-bright); background:none; padding:14px 20px; border-radius:2px;
-    font-family:inherit; cursor:pointer; font-size:.88rem; transition:.3s;
-  }
-  .btn-add-product:hover{background:var(--gold); color:var(--obsidian-2);}
+  .admin-add-card{border:1px dashed var(--line); border-radius:6px; padding:22px; display:flex; align-items:center; justify-content:center;}
+  .btn-add-product{border:1px solid var(--gold); color:var(--gold-bright); background:none; padding:14px 20px; border-radius:2px; font-family:inherit; cursor:pointer; font-size:.88rem; transition:.3s;}
+  .btn-add-product:hover{background:var(--gold); color:var(--noir);}
 
   /* ---------- reveal on scroll ---------- */
   .reveal{opacity:0; transform:translateY(24px); transition:opacity .8s ease, transform .8s ease;}
@@ -330,7 +311,6 @@
   /* ---------- responsive ---------- */
   @media (max-width:900px){
     .product-grid{grid-template-columns:repeat(2,1fr);}
-    .collection-grid{grid-template-columns:1fr;}
     .craft-stats{grid-template-columns:repeat(2,1fr); row-gap:34px;}
     .footer-grid{grid-template-columns:1fr 1fr;}
   }
@@ -341,16 +321,18 @@
     .product-grid{grid-template-columns:1fr;}
     .band{flex-direction:column; align-items:flex-start;}
     .footer-grid{grid-template-columns:1fr;}
+    section{padding:90px 6%;}
   }
 </style>
 </head>
 <body>
 
+<div class="grain"></div>
 <div class="thread-wrap"><div class="thread-fill" id="threadFill"></div></div>
 
 <header>
   <div class="logo">
-    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="#a9772f" stroke-width="2"/><circle cx="20" cy="20" r="9" stroke="#a9772f" stroke-width="1.4"/></svg>
+    <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="#f3ce7d" stroke-width="2"/><circle cx="20" cy="20" r="9" stroke="#f3ce7d" stroke-width="1.4"/></svg>
     درخشش
   </div>
   <nav><ul>
@@ -361,15 +343,31 @@
     <li><a href="#contact">تماس</a></li>
   </ul></nav>
   <a href="#products" class="nav-cta">مشاهده فروشگاه</a>
-  <button class="menu-btn" aria-label="منو">☰</button>
+  <button class="menu-btn" id="menuBtn" aria-label="باز کردن منو" aria-expanded="false">☰</button>
 </header>
 
+<div class="mobile-drawer" id="mobileDrawer">
+  <a href="#home">خانه</a>
+  <a href="#collections">مجموعه‌ها</a>
+  <a href="#products">محصولات</a>
+  <a href="#craft">هنر ما</a>
+  <a href="#contact">تماس</a>
+  <a href="#products" class="nav-cta">مشاهده فروشگاه</a>
+</div>
+
 <section class="hero" id="home">
-  <svg class="hero-ring" viewBox="0 0 600 600" fill="none">
-    <circle cx="300" cy="300" r="230" stroke="#8a6420" stroke-opacity="0.35" stroke-width="1"/>
-    <circle cx="300" cy="300" r="180" stroke="#8a6420" stroke-opacity="0.5" stroke-width="1.5"/>
-    <ellipse cx="300" cy="150" rx="34" ry="22" stroke="#a9772f" stroke-width="2"/>
-  </svg>
+  <div class="hero-orbit">
+    <svg viewBox="0 0 600 600" fill="none">
+      <circle cx="300" cy="300" r="230" stroke="#d6a94a" stroke-opacity="0.3" stroke-width="1"/>
+      <circle cx="300" cy="300" r="180" stroke="#d6a94a" stroke-opacity="0.45" stroke-width="1.5"/>
+      <ellipse cx="300" cy="150" rx="34" ry="22" stroke="#f3ce7d" stroke-width="2" stroke-opacity="0.5"/>
+    </svg>
+    <div class="orbit-spin"><div class="dot"></div></div>
+  </div>
+  <span class="spark" style="right:18%; top:60%; animation-delay:0s;"></span>
+  <span class="spark" style="right:70%; top:70%; animation-delay:2s;"></span>
+  <span class="spark" style="right:40%; top:50%; animation-delay:4s;"></span>
+  <span class="spark" style="right:85%; top:40%; animation-delay:1.2s;"></span>
   <div class="hero-content">
     <div class="eyebrow">دست‌ساز &nbsp;·&nbsp; طلا و نقره &nbsp;·&nbsp; تهران</div>
     <h1>درخششی که <em>برای دستِ شما</em><br>ساخته شده</h1>
@@ -388,9 +386,9 @@
     <h2>دنیای انگشترهای دست‌ساز</h2>
     <p>از حلقه‌های ساده‌ی روزمره تا نگین‌های بزرگ برای شب‌های خاص؛ هر قطعه شخصیت خودش را دارد.</p>
   </div>
-  <div class="collection-grid" style="grid-template-columns:1fr; max-width:480px;">
+  <div class="collection-grid">
     <div class="collection-card reveal">
-      <svg class="glyph" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="62" r="30" stroke="#8a6420" stroke-width="2"/><path d="M35 40 L50 12 L65 40" stroke="#a9772f" stroke-width="2" stroke-linejoin="round"/><circle cx="50" cy="18" r="4" fill="#a9772f"/></svg>
+      <svg class="glyph" viewBox="0 0 100 100" fill="none"><circle cx="50" cy="62" r="30" stroke="#f3ce7d" stroke-width="2"/><path d="M35 40 L50 12 L65 40" stroke="#d6a94a" stroke-width="2" stroke-linejoin="round"/><circle cx="50" cy="18" r="4" fill="#d6a94a"/></svg>
       <span class="count">۲۴ طرح</span>
       <h3>انگشترها</h3>
       <p>از حلقه‌های ساده‌ی روزمره تا نگین‌های بزرگ برای شب‌های خاص.</p>
@@ -443,7 +441,7 @@
   <div class="footer-grid">
     <div class="footer-brand">
       <div class="logo">
-        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="#a9772f" stroke-width="2"/><circle cx="20" cy="20" r="9" stroke="#a9772f" stroke-width="1.4"/></svg>
+        <svg viewBox="0 0 40 40" fill="none"><circle cx="20" cy="20" r="17" stroke="#f3ce7d" stroke-width="2"/><circle cx="20" cy="20" r="9" stroke="#f3ce7d" stroke-width="1.4"/></svg>
         درخشش
       </div>
       <p>فروشگاه تخصصی انگشتر دست‌ساز؛ جایی که فلز، داستان می‌شود.</p>
@@ -499,7 +497,8 @@
   <div class="admin-head">
     <div>
       <h2>پنل مدیریت انگشترها</h2>
-      <div class="sub">تغییرات همین‌جا در مرورگر شما ذخیره می‌شود و بلافاصله در فروشگاه نمایش داده می‌شود.</div>
+      <div class="sub">هر تغییری که این‌جا ذخیره کنید، روی گوشی و مرورگر شما ذخیره می‌شود و هم‌زمان به سرور فرستاده می‌شود تا در فروشگاه — روی موبایل، تبلت و کامپیوتر هر بازدیدکننده‌ای — دیده شود.</div>
+      <div class="sync-badge"><span class="sync-dot"></span><span id="syncStatus">به سرور همگام‌سازی متصل است</span></div>
     </div>
     <button class="btn-logout" id="adminLogoutBtn">خروج از پنل</button>
   </div>
@@ -515,6 +514,22 @@
     fill.style.width = pct + '%';
   });
 
+  // mobile drawer
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileDrawer = document.getElementById('mobileDrawer');
+  menuBtn.addEventListener('click', () => {
+    const isOpen = mobileDrawer.classList.toggle('open');
+    menuBtn.textContent = isOpen ? '✕' : '☰';
+    menuBtn.setAttribute('aria-expanded', String(isOpen));
+  });
+  mobileDrawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => {
+      mobileDrawer.classList.remove('open');
+      menuBtn.textContent = '☰';
+      menuBtn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
   // reveal on scroll (for static elements present at load)
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -528,7 +543,7 @@
   // آیدی تلگرام برای نهایی‌کردن خرید
   const TELEGRAM_USERNAME = 'Aliakbar139191';
   // رمز پیش‌فرض پنل مدیریت — پیشنهاد می‌شود آن را تغییر دهید
-  const ADMIN_PASSWORD = 'darakhshesh1404';
+  const ADMIN_PASSWORD = '101a101';
 
   const DEFAULT_PRODUCTS = [
     {
@@ -539,7 +554,7 @@
       price: 4200000,
       discount: 0,
       image: '',
-      svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="60" r="26" stroke="#a9772f" stroke-width="3"/><path d="M38 38 L50 14 L62 38" stroke="#a9772f" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="18" r="6" fill="#a9772f"/></svg>'
+      svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="60" r="26" stroke="#d6a94a" stroke-width="3"/><path d="M38 38 L50 14 L62 38" stroke="#d6a94a" stroke-width="3" stroke-linejoin="round"/><circle cx="50" cy="18" r="6" fill="#d6a94a"/></svg>'
     },
     {
       id: 'p2',
@@ -549,7 +564,7 @@
       price: 6500000,
       discount: 0,
       image: '',
-      svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="60" r="24" stroke="#a9772f" stroke-width="3"/><circle cx="50" cy="60" r="10" stroke="#a9772f" stroke-width="2"/><path d="M36 40 L50 16 L64 40" stroke="#a9772f" stroke-width="3" stroke-linejoin="round"/></svg>'
+      svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="60" r="24" stroke="#d6a94a" stroke-width="3"/><circle cx="50" cy="60" r="10" stroke="#d6a94a" stroke-width="2"/><path d="M36 40 L50 16 L64 40" stroke="#d6a94a" stroke-width="3" stroke-linejoin="round"/></svg>'
     },
     {
       id: 'p3',
@@ -559,22 +574,68 @@
       price: 980000,
       discount: 0,
       image: '',
-      svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="58" r="22" stroke="#a9772f" stroke-width="3"/><path d="M50 36 L44 18 L56 18 Z" stroke="#a9772f" stroke-width="2" stroke-linejoin="round"/></svg>'
+      svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="58" r="22" stroke="#d6a94a" stroke-width="3"/><path d="M50 36 L44 18 L56 18 Z" stroke="#d6a94a" stroke-width="2" stroke-linejoin="round"/></svg>'
     }
   ];
 
-  function loadProducts(){
+  /* =======================================================
+     ذخیره‌سازی دائمی و مشترک با jsonbin.io
+     همین بخش است که باعث می‌شود تغییرات پنل مدیریت
+     روی همهٔ گوشی‌ها و مرورگرها دیده شود — نه فقط دستگاه خودتان.
+     ======================================================= */
+  const JSONBIN_BIN_ID = '6a8024a9f5f4af5e29193a17';
+  const JSONBIN_MASTER_KEY = '$2a$10$z6YL9eeJCRQJps3jLZ8p1uOTmaBpGJlAtGwUrgLIcvhOJQIqroBaO';
+  const JSONBIN_URL = 'https://api.jsonbin.io/v3/b/' + JSONBIN_BIN_ID;
+
+  const syncStatusEl = () => document.getElementById('syncStatus');
+
+  // خواندن اولیه: تا وقتی از سرور جواب بیاد، از نسخه محلی (localStorage) یا پیش‌فرض استفاده می‌کنیم
+  function loadLocalProducts(){
     try{
       const raw = localStorage.getItem(STORAGE_KEY);
       if(raw) return JSON.parse(raw);
-    }catch(e){ console.warn('خطا در خواندن اطلاعات ذخیره‌شده', e); }
+    }catch(e){ console.warn('خطا در خواندن اطلاعات ذخیره‌شده محلی', e); }
     return JSON.parse(JSON.stringify(DEFAULT_PRODUCTS));
   }
+
+  // ذخیره: هم روی سرور (برای همه بازدیدکننده‌ها، روی هر گوشی و مرورگری) و هم به‌صورت پشتیبان در localStorage
   function saveProducts(products){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+    fetch(JSONBIN_URL, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_MASTER_KEY
+      },
+      body: JSON.stringify({ products: products })
+    }).then(res => {
+      const el = syncStatusEl();
+      if(!el) return;
+      el.textContent = res.ok ? 'با موفقیت روی سرور ذخیره شد' : 'ذخیره روی سرور ناموفق بود — فقط روی همین دستگاه ذخیره شد';
+    }).catch(e => {
+      console.warn('ذخیره روی سرور ناموفق بود، فقط به‌صورت محلی ذخیره شد.', e);
+      const el = syncStatusEl();
+      if(el) el.textContent = 'اتصال به سرور برقرار نشد — فقط روی همین دستگاه ذخیره شد';
+    });
   }
 
-  let products = loadProducts();
+  // بارگذاری از سرور در زمان اجرا
+  async function loadRemoteProducts(){
+    try{
+      const res = await fetch(JSONBIN_URL + '/latest', {
+        headers: { 'X-Master-Key': JSONBIN_MASTER_KEY }
+      });
+      if(!res.ok) return null;
+      const data = await res.json();
+      if(data && data.record && Array.isArray(data.record.products)) return data.record.products;
+      return null;
+    }catch(e){
+      console.warn('خواندن از سرور ناموفق بود، از نسخه محلی استفاده می‌شود.', e);
+      return null;
+    }
+  }
+
+  let products = loadLocalProducts();
 
   function toPersianDigits(str){
     const map = {'0':'۰','1':'۱','2':'۲','3':'۳','4':'۴','5':'۵','6':'۶','7':'۷','8':'۸','9':'۹'};
@@ -588,7 +649,7 @@
     const grid = document.getElementById('productGrid');
     if(!grid) return;
     if(products.length === 0){
-      grid.innerHTML = '<p style="color:rgba(43,38,32,.5); grid-column:1/-1; text-align:center;">در حال حاضر محصولی موجود نیست.</p>';
+      grid.innerHTML = '<p style="color:var(--ivory-faint); grid-column:1/-1; text-align:center;">در حال حاضر محصولی موجود نیست.</p>';
       return;
     }
     grid.innerHTML = products.map(p => {
@@ -769,7 +830,7 @@
           price: 0,
           discount: 0,
           image: '',
-          svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="58" r="22" stroke="#a9772f" stroke-width="3"/></svg>'
+          svg: '<svg viewBox="0 0 100 100" fill="none"><circle cx="50" cy="58" r="22" stroke="#d6a94a" stroke-width="3"/></svg>'
         };
         products.push(newProduct);
         saveProducts(products);
@@ -780,6 +841,16 @@
   }
 
   renderStore();
+
+  // پس از اتصال به سرور، آخرین نسخه محصولات (ثبت‌شده توسط مدیر از هر دستگاهی) را بارگذاری کن
+  loadRemoteProducts().then(remote => {
+    if(remote){
+      products = remote;
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+      renderStore();
+      if(adminPanel.classList.contains('open')) renderAdmin();
+    }
+  });
 </script>
 
 </body>
